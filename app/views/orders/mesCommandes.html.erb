@@ -1,0 +1,10 @@
+<h1>Mes Commandes</h1>
+
+<div id="orders">
+  <% @orders.each do |order| %>
+    <%= render order %>
+    <p>
+      <%= link_to "Show this order", order %>
+    </p>
+  <% end %>
+</div>

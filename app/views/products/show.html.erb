@@ -1,0 +1,21 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @product %>
+
+<div>
+  <%if actif_profil_is_seller? %>
+    <%= link_to "Edit this product", edit_product_path(@product) %> |
+    <%= link_to "Back to products", products_path %>
+
+    <%= button_to "Destroy this product", @product, method: :delete %>
+  <%elsif actif_profil_is_buyer?%>
+    <%= form_with url: '/products/'+ @product[:id].to_s+'/createOrder', method: :get do |form| %>
+        <div>
+          <%= button_to "Buy this product"%>
+        </div>
+    <% end %>
+    <%= link_to "Back to products", products_path %>
+  <%else%>
+    <%= link_to "Back to products", products_path %>
+  <%end%>
+</div>

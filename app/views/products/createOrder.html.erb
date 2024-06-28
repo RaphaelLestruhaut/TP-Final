@@ -1,0 +1,22 @@
+<%= form_with url: '/orders', method: :post do |form| %>
+<div>
+    <div>
+        <%= form.label :product_id, style: "display: block" %>
+        <%= form.text_field :product_id, :value => @product.id %>
+    </div>
+
+    <div>
+        <%= form.label :buyer_id, style: "display: block" %>
+        <%= form.text_field :buyer_id, :value => find_id_buyer %>
+    </div>
+
+    <div>
+        <%= form.label :quantity, style: "display: block" %>
+        <%= form.number_field :quantity %>
+    </div>
+
+    <div>
+        <%= form.submit %>
+    </div>
+</div>
+<%end%>

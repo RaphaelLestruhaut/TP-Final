@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ecommerce</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <nav>
+      <% if logged_in? %>
+        <%= link_to "Logout", logout_path, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+        <%= link_to "Profil", '/users/'+ current_user.to_s+'/edit' %>
+        <% if actif_profil_is_seller? %>
+          <%= link_to "Mes produits", '/products/'+ current_user.to_s+'/mesProduits' %>
+        <%end%>
+        <% if actif_profil_is_buyer? %>
+          <%= link_to "Mes commandes", '/orders/'+ current_user.to_s+'/mesCommandes' %>
+        <%end%>
+        <% if if_both? %>
+          <div>
+            vous êtes vendeur et acheteur <br/>
+            actuellement vous êtes sur votre profil <%if sessionActif() == 1%>acheteur <%else%>vendeur <%end%> <br/>
+            <%= form_with url: '/updateSession', action: :post do |form| %>
+              <div>
+                <%= form.submit "changer de profil" %>
+              </div>
+            <% end %>
+          </div>
+        <% elsif if_buyer? %>
+          <div>vous êtes un acheteur</div>
+        <% elsif if_seller? %>
+          <div>vous êtes un vendeur</div>
+        <%else%>
+          <div>vous êtes un visiteur</div>
+        <%end%>
+      <% else %>
+        <%= link_to "Login", login_path %>
+      <% end %>
+    </nav>
+    <%= yield %>
+  </body>
+</html>
